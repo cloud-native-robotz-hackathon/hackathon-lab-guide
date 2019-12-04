@@ -1,0 +1,185 @@
+= Robot Hackathon - Python module
+//refs
+:url-ocp-basepath: {{OCP-BASEPATH}}
+:url-gogs: http://gogs-hackathon.apps.{url-ocp-basepath}
+:url-ocpconsole: https://master.{url-ocp-basepath}/console
+:url-codeready: http://codeready-hackathon.apps.{url-ocp-basepath}
+:url-3scale: {{3SCALE_URL}}
+
+== Welcome Python Developers!
+
+Good choice of programming language team <GUID>! With the help of Python you will control your robot in no time!
+
+Robot Services Ltd has provided a basic Python application to 
+quickly get you started with your first robot application. It’s provided in a GitHub repository. You may mirror this template project into your team’s Git (Gogs) repository running in OpenShift and start to developing in it.
+
+== Migrate the Python Example into your Gogs Git Repo
+
+. Login into {url-gogs}[Gogs^] with `*<GUID>*` and the provided password.
+. Click on the `*+*` in the upper right and choose `*New Migration*`.
+. Fill in the `*Clone Address*` field: `*https://github.com/goetzrieger/robot-hackathon-starter-app-python.git*`
+. In the `*Repository Name*` field write `*<GUID>-python*`
+. Do *not* set the repo as mirror or as private!
+. Click on `*Migrate Repository*`
+
+== Configure and Run
+
+In this Hackathon you'll use CodeReady Workspaces for development. To get started you have to do the following general steps as explained in the following sections:
+
+* Make sure you have a CodeReady Workspace for your programming language of choice, you should have done this already. 
+* Clone your Gogs repository into a CodeReady project
+* Do some basic configuration 
+* Start the application for the first time
+
+=== Clone Gogs Repo into CodeReady Workspace
+
+If you don't have {url-codeready}[CodeReady^] open in your browser, login as your team. Then open the `Workspace` you already created: choose it in the *Dashboard* or *Workspaces* view and click the *OPEN* button in the upper right corner. 
+
+To start a new project with your sources from Gogs:
+
+* Click `*Import Project*`, choose `GIT` as Version Control System.
+* Paste your GIT Project URL from Gogs. Get it by copying the HTTP URL from your Gogs account, it should look like `*{url-gogs}/<GUID>/<GUID>-python.git*`
+* Edit the link and add your username and passwort to it for push authentication. It should now look like this: `*http://<GUID>:<PASSWORD>@{url-gogs}/<GUID>/<GUID>-python*`
+* Click on `*Import*`
+* In the project configuration window that comes up next leave or set to `*Blank*`
+* Click `*Save*`.
+
+In addition you have to edit the GIT user profile in Che: 
+
+* In the menu choose `*Profile->Prereferences*`
+* Select `*GIT Committer*`
+* Enter `*<GUID>*` in the name field and `*<GUID>@example.com*` in the E-Mail field. 
+* Click on `*Save*` and close the Window.
+
+Now is a good time to have a first look at the Python template application. It's deliberately simple as it's just meant to be a starting point. It's based on the Flask framework, it creates a simple webpage with a button to allow you to execute a method *run*. 
+
+=== Basic Application Configuration
+
+Because the application you cloned is a template to make it work with your robot you have to configure the connection details first:
+
+* Expand the project tree on the left and open the *config.py* file by double-clicking it
+* Change the *URI* and *APITOKEN* parameters
+** You could look up the URI in your 3Scale account, it should look like this example: *https://api-2445582274375.production.gw.apicast.io/api/robot*.
+** For *APITOKEN* fill in your team name to route your requests to the proper robot
+
+Now commit these code changes to Gogs:
+
+In CodeReady click on Git→Commit
+
+Type in a Commit message
+
+Make sure to check the *Push committed changes to* checkbox
+
+Click on Commit.
+
+After the code changes have been pushed to Git/Gogs you can build a new version of your app in OpenShift.
+
+TIP: If you want to see the changes that you have just pushed to Gogs you can have a look at your current repository in the Gogs Webui
+
+== First build in OpenShift.
+
+You're ready to run the application the first time! But first make sure your team robot is connected to the power supply and switched on!
+
+Open the {url-ocpconsole}[OpenShift Web UI^]. If not already logged in, log in with `*<GUID>*` and the provided password.
+
+. Click on the `*<GUID>-project*`
+. Click on *Browse Catalog* -> *Languages* -> *Python* and choose `*Phython*`.
+. Click on `*Next*`
+. As Python version keep 3.6
+. As `Application Name` use `*<GUID>-phython*` and as `GIT Repository` use `*{url-gogs}/<GUID>/<GUID>-python*`
+. Click on `*Create*` and `*Close*`
+. Click on `*Overview*` and then on the little `*>*` beside the `Deployment Config`.
+. You can watch the build steps in the lower right console
+. The application is deployed an ready when you see a blue circle indicating the number of healthy pods with you app
+
+=== Check Robot
+
+After the build is complete, click the Link to your newly created application in the top right. It'll take you to the Python Robot Control Landing Page. From here you can execute a simple connectivity test of your robot by clicking *Status*.
+
+=== Run Robot!
+
+To execute the *run* method click the `*Run*` button. Execution will take some seconds but then the robot should move some centimeters forward.
+
+If the robot moved, your setup is good and ready to go for the Hackathon!
+
+== Start Hacking
+
+To get started with programming open the file *wsgi.py* and then edit the *run* method.
+
+Currently our robot is driving 5 cm forward. We want to let is drive 10 cm, so go ahead and find the parameter where the distance is set and change it accordingly. Commit and push the code as above.  
+
+After the code changes have been pushed to Git/Gogs you can build a new version of your app in OpenShift:
+
+. In the OpenShift Console in the *Overview* of your project click the three point menu above the blue circle
+. Choose *Start build* 
+
+== Training Missions
+
+Here are some training missions to get you started.
+
+*Hints:*
+
+* Plan what your robot should do, check the space for the square
+* Look up the robot API calls you might need in 3Scale
+* Add code in the *run* method and commit/push it with CodeReady
+* Start the Build in OpenShift
+* Test your code by running it from the robot control page
+
+As everything happens in HTTP requests, if you manage to get your program into an endless loop or so, the easiest way to terminate your application might be to scale the Pod down in the OpenShift console. An even better idea is to limit loop runs.
+
+If you want to see e.g. debug messages you put into your code, open the Logs window of your Pod in Openshift.
+
+=== Task: Make your robot drive in a square
+
+Get your robot to drive in a square with approx 10 cm edge length.
+
+WARNING: Solution Below!
+
++++ <details><summary> +++
+*>> _Click here for the solution_ <<*
++++ </summary><div> +++
+
+This is the most simple way your *run* method could look like. It's obviously not programmed in a smart way, that's what you are here for!
+
+----
+def run():
+    data = {'user_key': application.config['APITOKEN']} 
+    response = requests.post(application.config['URI'] + '/forward/10', data=data, verify=False)
+    response = requests.post(application.config['URI'] + '/right/90', data=data, verify=False)
+    response = requests.post(application.config['URI'] + '/forward/10', data=data, verify=False)
+    response = requests.post(application.config['URI'] + '/right/90', data=data, verify=False)
+    response = requests.post(application.config['URI'] + '/forward/10', data=data, verify=False)
+    response = requests.post(application.config['URI'] + '/right/90', data=data, verify=False)
+    response = requests.post(application.config['URI'] + '/forward/10', data=data, verify=False)
+    return response.text
+----
+
++++ </div></details> +++
+
+=== Task: Make your robot stop before hitting the wall
+
+Setup a barrrier/wall and program your robot so it moves to the wall but stops in time before hitting it. You'll need the forward() and distance() functions.
+
+WARNING: Solution Below!
+
++++ <details><summary> +++
+*>> _Click here for the solution_ <<*
++++ </summary><div> +++
+
+This is again not programmed in a particularly smart way, it's just an intro. You can do better!
+
+----
+def run():
+    data = {'user_key': application.config['APITOKEN']} 
+    response = requests.get(application.config['URI'] + '/distance' + '?user_key=' + application.config['APITOKEN'], verify=False)
+    while float(response.text) > 100:
+        print (str(response.text))
+        requests.post(application.config['URI'] + '/forward/5', data=data, verify=False)
+        response = requests.get(application.config['URI'] + '/distance' + '?user_key=' + application.config['APITOKEN'], verify=False)
+    return 'Wall coming up!'
+----
+
++++ </div></details> +++
+
+
+

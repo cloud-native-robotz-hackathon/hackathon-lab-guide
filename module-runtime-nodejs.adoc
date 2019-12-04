@@ -1,0 +1,102 @@
+= Robot Hackathon - NodeJS module
+
+== Welcome Javascript developers!
+
+Good choice Team <GUID>! With the help of nodeJS you will crush all the other Teams!
+
+Robot Services Ltd has provided a basic nodeJS application to
+quickly get you started with your first robot application.
+
+. Login into http://gogs-lab-infra.apps.43d7.events.opentlc.com[Gogs^] with `*<GUID>*` and the provided password.
+. Click on the `*+*` in the upper right and choose `*New Migration*`.
+. In the `*Clone Address*` field write `*https://github.com/Crosbie/robot-hackathon-starter-app-nodejs*`
+. In the `*Repository Name*` field write `*<GUID>-nodeJS*`
+. Click on `*Migrate Repository*`
+
+Go to your `*<GUID>-nodeJS*` project and edit the `*app.js*`.
+
+Change the API Key to your 3Scale API Key: `*$apikey = "<GUID>";*`
+
+Click on `*Commit changes*`.
+
+In http://che-lab-infra.apps.43d7.events.opentlc.com/[Eclipse Che^] open your `Workspace` click on `*Import Project*`, choose `GIT` as Version Control System.
+
+In the `*URL*` field paste your GIT Project from Gogs. It should be: `*http://gogs-lab-infra.apps.43d7.events.opentlc.com/<GUID>/<GUID>-php*`.
+
+Edit the link and add your username and passwort to it. It should look like this: `*http://<GUID>:<PASSWORD>@gogs-lab-infra.apps.43d7.events.opentlc.com/<GUID>/<GUID>-php*`
+
+Don't forget to use the password which was provided to you.
+
+Click on `*Import*` and choose `*Javascript*`, then click `*Save*`.
+
+We must edit the GIT user profile. For that click on `*Profile*`, `*Prereferences*`, choose `*GIT Committer*` enter `*<GUID>*` in the name field and `*<GUID>@example.com*` in the E-Mail field. Click on `*Save*` and close the Window.
+
+Let's have a first build in OpenShift.
+
+Open the https://master.43d7.events.opentlc.com/console[OpenShift Web UI^]. If not already logged in, log in with `*<GUID>*` and the provided password.
+
+. Click on the `*<GUID>-project*`
+. Click on `*Browse Catalog*`, `*Languages*`, `*Javascript*`, `*NodeJS*` again.
+. Click on `*Next*`
+. As `Application Name` use `*<GUID>-nodeJS*` and as `GIT Repository` use `*http://gogs-lab-infra.apps.43d7.events.opentlc.com/<GUID>/<GUID>-nodeJS*`
+. Click on `*Create*` and `*Close*`
+. Click on `*Overview*` and then on the little `*>*` beside the `Deployment Config`.
+
+After the build is complete, click the Link to your new created Application.
+
+Now you see the Robot Car Control Panel. From here you can test some basic functionalities.
+
+If you click on the `*Run*` button, it will execute the `*run.js*` script from the Gogs project.
+
+To edit the `*run.js*` script, go to Eclipse Che, expand the `*<GUID>-project*` and double click on `*run.js*`.
+
+Edit the script as wanted.
+
+Then click on `*Git*`, `*Commit*`, choose a Commit message as you want. Don't forget to click on the `*Push commited changes*` checkmark. Then click on `*Commit*`.
+
+In OpenShift rebuild you application and test the new `run.js` script.
+
+== Challenge
+
+*Task:* Make your robot drive in a square with approx 20cm edge length
+
+*Hints:*
+
+* Plan what your robot should do, check the space for the square.
+* Look up the javascript calls you need (look at the Robot Car Control Panel or in `run.js`)
+* Change the code in `run.js` and commit it with Eclipse Che
+* Keep in mind that motors and sensors of the robot are not 100 % precise, so you may need to compensate in your code
+* Deploy to OpenShift
+* Test your `run.js`
+
+WARNING: Solution (for run.js) Below!
+----
+<?javascript
+
+  function(cb){
+    api.forward(20,cb)
+  },
+  function(cb){
+    api.turnRight(90,cb)
+  },
+  function(cb){
+    api.forward(20,cb)
+  },
+  function(cb){
+    api.turnRight(90,cb)
+  },
+  function(cb){
+    api.forward(20,cb)
+  },
+  function(cb){
+    api.turnRight(90,cb)
+  },
+  function(cb){
+    api.forward(20,cb)
+  },
+  function(cb){
+    api.turnRight(90,cb)
+  }
+
+?>
+----

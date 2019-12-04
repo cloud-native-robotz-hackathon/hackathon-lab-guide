@@ -1,0 +1,21 @@
+id: "hackathon1"
+name: "Cloud Native Robots Hackathon"
+
+content:
+  url: https://raw.githubusercontent.com/siamaksade/workshopper-template/master
+
+vars:
+  OCP-BASEPATH: "<REPLACE ME>"  
+  OCP-PASSWORD: "<REPLACE ME>"
+  3SCALE-URL: "<REPLACE ME>"
+  JAVA_APP: true
+  
+modules:
+  activate:
+  - robot-hackathon
+  - module-runtime-java-springboot
+  - module-runtime-java-quarkus
+  - module-runtime-nodejs
+  - module-runtime-python
+  - module-runtime-php
+
