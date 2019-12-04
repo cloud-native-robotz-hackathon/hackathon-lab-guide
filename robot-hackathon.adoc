@@ -103,7 +103,7 @@ CodeReady Workspaces provides development environments for several languages and
 ==== Launch your workspace from CodeReady
 
 After login you are in the Workspace management view of CodeReady Workspaces. Create your 
-workspace and choose `Java` or `Python` as your programming language, depending on the language that you want to develop your robot application in:
+workspace and choose `Java`, or `Python` as your programming language, depending on the language that you want to develop your robot application in:
 
 * *NAME*: `<GUID>-robot-app-workspace` 
 * *SELECT STACK*: `Cloud Native - Java ODO` / `Python`
@@ -117,11 +117,15 @@ WARNING: Remember to only create one workspace per team. Creating a new workspac
 
 Depending on your programming language choice, please refer to one of the following respective guides on how to set up your application and get started.
 
-===== https://adoc.redhat.partners/lab/build-github.php?guid=<GUID>&file=robot-java-module.adoc&dir=/nexus-Six/openshift-robot-hackathon/master/doc/[Go on with Java^]
+===== Java Spring Boot Robot App
 
-===== https://adoc.redhat.partners/lab/build-github.php?guid=<GUID>&file=robot-python-module.adoc&dir=/nexus-Six/openshift-robot-hackathon/master/doc/[Go on with Python^]
+===== Java Quarkus Robot App
 
-// ===== https://adoc.redhat.partners/lab/build-github.php?guid=<GUID>&file=robot-php-module.adoc&dir=/nexus-Six/openshift-robot-hackathon/master/doc/[Go on with PHP^]
+===== NodeJS Robot App
+
+===== Python Robot App
+
+===== PHP Robot App
 
 == Now the Fun Starts!
 
