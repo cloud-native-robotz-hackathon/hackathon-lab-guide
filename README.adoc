@@ -20,7 +20,7 @@ The actual lab instructions depending on which markup language you have chosen (
 
 ```
 $ oc new-app quay.io/osevg/workshopper --name=hackathon-lab-guide \
-      -e WORKSHOPS_URLS="https://raw.githubusercontent.com/siamaksade/workshopper-template/master/_workshop1.yml" \
+      -e WORKSHOPS_URLS="https://raw.githubusercontent.com/cloud-native-robotz-hackathon/hackathon-lab-guide/master/_hackathon1.yml" \
       -e JAVA_APP=false 
 $ oc expose svc/hackathon-lab-guide
 ```

@@ -2,7 +2,7 @@ id: "hackathon1"
 name: "Cloud Native Robots Hackathon"
 
 content:
-  url: https://raw.githubusercontent.com/siamaksade/workshopper-template/master
+  url: https://raw.githubusercontent.com/cloud-native-robotz-hackathon/hackathon-lab-guide/master
 
 vars:
   OCP-BASEPATH: "<REPLACE ME>"  
