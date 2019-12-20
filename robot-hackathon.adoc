@@ -1,4 +1,4 @@
-= Robot Hackathon - Team <GUID>
+= Robot Hackathon
 // Refs:
 :url-ocp-basepath: {{OCP-BASEPATH}}
 :url-ocpconsole: https://console-openshift-console.apps.{url-ocp-basepath}
