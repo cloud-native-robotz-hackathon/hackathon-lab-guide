@@ -7,8 +7,11 @@ content:
 vars:
   OCP-BASEPATH: "<REPLACE ME>"  
   OCP-PASSWORD: "<REPLACE ME>"
-  3SCALE-URL: "<REPLACE ME>"
-  JAVA_APP: true
+  URL-OCPCONSOLE: "<REPLACE ME>"
+  URL-CODEREADY: "<REPLACE ME>"
+  URL-GITEA: "<REPLACE ME>"
+  URL-3SCALE: "<REPLACE ME>"
+  JAVA_APP: false
   
 modules:
   activate:
@@ -18,4 +21,3 @@ modules:
   - module-runtime-nodejs
   - module-runtime-python
   - module-runtime-php
-
