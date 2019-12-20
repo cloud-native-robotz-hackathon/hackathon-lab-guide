@@ -7,8 +7,8 @@ content:
 vars:
   OCP-BASEPATH: "<REPLACE ME>"  
   OCP-PASSWORD: "<REPLACE ME>"
-  3SCALE-URL: "<REPLACE ME>"
-  JAVA_APP: true
+  URL-3SCALE: "<REPLACE ME>"
+  JAVA_APP: false
   
 modules:
   activate:
