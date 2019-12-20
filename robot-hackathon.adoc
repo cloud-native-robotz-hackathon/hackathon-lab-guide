@@ -1,10 +1,10 @@
 = Robot Hackathon - Team <GUID>
 // Refs:
 :url-ocp-basepath: {{OCP-BASEPATH}}
-:url-ocpconsole: https://master.{url-ocp-basepath}/console
-:url-codeready: http://codeready-workspaces.apps.{url-ocp-basepath}
-:url-3scale: https://rh-test.3scale.net
-:url-gogs: http://gogs-hackathon.apps.{url-ocp-basepath}
+:url-ocpconsole: https://console-openshift-console.apps.{url-ocp-basepath}
+:url-codeready: http://codeready-codeready.apps.{url-ocp-basepath}
+:url-3scale: {{URL-3SCALE}}
+:url-gogs: https://gitea-gitea.apps.{url-ocp-basepath}
 
 == Introduction
 
