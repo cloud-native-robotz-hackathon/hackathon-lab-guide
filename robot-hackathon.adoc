@@ -98,36 +98,27 @@ a browser-based, cloud-native IDE running in the OpenShift environment.
 
 To access CodeReady in your browser click {url-codeready}[here^]. Login with `*<robot name>*` as username and password : {{OCP-PASSWORD}}.
 
-CodeReady Workspaces provides development environments for several languages and runtimes. You have the choice between Java and Python.
+==== The Time has come: Choose your Runtime
 
-==== Launch your workspace from CodeReady
+You are in the Workspace management view of CodeReady Workspaces now. CodeReady Workspaces provides development environments for several languages and runtimes, so you finally have to decide what runtime to use for programming your robot.
 
-After login you are in the Workspace management view of CodeReady Workspaces. Create your 
-workspace and choose `Java`, or `Python` as your programming language, depending on the language that you want to develop your robot application in:
+TIP: You can choose between Java, Python and NodeJS. Every runtime comes with a template to get you started!
 
-* *NAME*: `<robot name>-robot-app-workspace` 
-* *SELECT STACK*: `Cloud Native - Java ODO` / `Python`
-* Click `*CREATE & OPEN*`
+==== Open the Runtime-Specific Guide 
 
-Codeready will now download the container image for your runtime from the central quay.io registry. Then it will start your workspace in a Pod and connect the Web IDE with your workspace. Now your CodeReady workspace is running in OpenShift and should open in your browser.
+Depending on your programming language choice, please refer to one of the following guides on how to set up your application and get started. Start the guide by clicking the name in the side bar:
 
-WARNING: Remember to only create one workspace per team. Creating a new workspace can take some time.
-
-==== Setup Your Application Template 
-
-Depending on your programming language choice, please refer to one of the following guides on how to set up your application and get started. Start the guide by clicking the name in the side bar
-
-* Java Spring Boot Robot App
-* Java Quarkus Robot App
+* Java Springboot Robot App
+// * Java Quarkus Robot App
 * NodeJS Robot App
 * Python Robot App
-* PHP Robot App
+// * PHP Robot App
 
 == Now the Fun Starts!
 
 Okay, by now you should have:
 
-* set up a complete Cloud Native Development Environment in the programming language of your choice  
+* set up a complete Cloud Native Development Environment using the programming language of your choice  
 * gone through some training missions to get you up to speed
 
 You have all the information to get started hacking the robot!
