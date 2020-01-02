@@ -1,57 +1,83 @@
 = Robot Hackathon - Python module
-//refs
+// Refs:
 :url-ocp-basepath: {{OCP-BASEPATH}}
-:url-gogs: http://gogs-hackathon.apps.{url-ocp-basepath}
-:url-ocpconsole: https://master.{url-ocp-basepath}/console
-:url-codeready: http://codeready-hackathon.apps.{url-ocp-basepath}
-:url-3scale: {{3SCALE_URL}}
+:url-ocpconsole: https://console-openshift-console.apps.{url-ocp-basepath}
+:url-codeready: http://codeready-codeready.apps.{url-ocp-basepath}
+:url-3scale: {{URL-3SCALE}}
+:url-gogs: https://gitea-gitea.apps.{url-ocp-basepath}
 
 == Welcome Python Developers!
 
-Good choice of programming language team <GUID>! With the help of Python you will control your robot in no time!
+Good choice of programming language team! With the help of Python you will control your robot in no time!
 
 Robot Services Ltd has provided a basic Python application to 
-quickly get you started with your first robot application. It’s provided in a GitHub repository. You may mirror this template project into your team’s Git (Gogs) repository running in OpenShift and start to developing in it.
+quickly get you started with your first robot application. It’s provided in a GitHub repository. You may mirror this template project into your team’s Git (Gitea) repository running in OpenShift and start to developing in it.
 
-== Migrate the Python Example into your Gogs Git Repo
+== Migrate the Python Example into your Git Repo
 
-. Login into {url-gogs}[Gogs^] with `*<GUID>*` and the provided password.
+. Login to your {url-gogs}[Gitea^] account with your teamname as username  and the provided password.
 . Click on the `*+*` in the upper right and choose `*New Migration*`.
-. Fill in the `*Clone Address*` field: `*https://github.com/goetzrieger/robot-hackathon-starter-app-python.git*`
-. In the `*Repository Name*` field write `*<GUID>-python*`
+. Fill in the `*Clone Address*` field: `*https://github.com/cloud-native-robotz-hackathon/starter-app-python.git*`
+. The `*Repository Name*` field should be `*starter-app-python*`
 . Do *not* set the repo as mirror or as private!
 . Click on `*Migrate Repository*`
 
 == Configure and Run
 
-In this Hackathon you'll use CodeReady Workspaces for development. To get started you have to do the following general steps as explained in the following sections:
+In this Hackathon you'll use CodeReady Workspaces for development. You should already be logged-in to CodeReady Workspaces as your robot user.
 
-* Make sure you have a CodeReady Workspace for your programming language of choice, you should have done this already. 
-* Clone your Gogs repository into a CodeReady project
-* Do some basic configuration 
-* Start the application for the first time
+To get started hacking you have to:
 
-=== Clone Gogs Repo into CodeReady Workspace
+* Start a runtime-specific CodeReady development workspace containing the tools you need
+* Have your code cloned into the development environment
 
-If you don't have {url-codeready}[CodeReady^] open in your browser, login as your team. Then open the `Workspace` you already created: choose it in the *Dashboard* or *Workspaces* view and click the *OPEN* button in the upper right corner. 
+You could use one of two options to do this in CodeReady Workspaces:
 
-To start a new project with your sources from Gogs:
+* Start a workspace in CodeReady from the list of available stacks and configure the project with a Git repository URL  
+* Use CodeReady's *devfile* mechanism.
 
-* Click `*Import Project*`, choose `GIT` as Version Control System.
-* Paste your GIT Project URL from Gogs. Get it by copying the HTTP URL from your Gogs account, it should look like `*{url-gogs}/<GUID>/<GUID>-python.git*`
-* Edit the link and add your username and passwort to it for push authentication. It should now look like this: `*http://<GUID>:<PASSWORD>@{url-gogs}/<GUID>/<GUID>-python*`
-* Click on `*Import*`
-* In the project configuration window that comes up next leave or set to `*Blank*`
-* Click `*Save*`.
+=== Configure CodeReady Workspaces using a devfile
 
-In addition you have to edit the GIT user profile in Che: 
+TIP: A devfile is a simple yaml file that describes your CodeReady Workspaces environment: the stack image to use, the Git repository to clone and more.
 
-* In the menu choose `*Profile->Prereferences*`
-* Select `*GIT Committer*`
-* Enter `*<GUID>*` in the name field and `*<GUID>@example.com*` in the E-Mail field. 
-* Click on `*Save*` and close the Window.
+Your repository already contains a *devfile.yaml* (go to the Gitea web UI and have a look if you are interested). To use it:
 
-Now is a good time to have a first look at the Python template application. It's deliberately simple as it's just meant to be a starting point. It's based on the Flask framework, it creates a simple webpage with a button to allow you to execute a method *run*. 
+* Go to the Gitea web UI, open the new repo and copy the HTTPS clone URL. 
+* Open the *devfile.yaml* by clicking it and press the pencil icon to switch to edit mode. 
+* In edit mode change 
+----
+location: 'https://github.com/goetzrieger/starter-app-python.git' 
+----
+
+to match your own repo url, e.g.:
+----
+location: 'http://gitea-gitea.apps.cluster-berlin-5375.berlin-5375.example.opentlc.com/terminator/starter-app-python.git' 
+----
+
+* Click the *Commit Changes* button
+
+
+Now point CodeReady Workspaces to the *devfile.yaml* using a special URL in the form of *http://codeready.url/f?url=http://gitrepo.url/devfile.yaml*. First get the raw URL of your devfile:
+
+* Open it by clicking the *Raw* button in Gitea
+* Copy the URL from your browser
+* Open the URL in a new browser tab: 
+
+----
+{url-codeready}/f?url=<your-devfile-raw-url>
+----
+
+This will bring up an animated construction image while building your dev environment. Hit the *Back to Dashboard* link at the lower left, you will see your workspace being build in the CodeReady web UI. Click the workspace name and then *OPEN*. Watch your workspace building.
+
+TIP: This can take a couple of minutes because it has to pull the stack image into OpenShift.
+
+You are ready to go when the *Welcome To Your Workspace* comes up. 
+
+* Close the welcome page (by clicking the *x*)
+* Open the Explorer by choosing the pages icon in the menubar to the left
+* Open the project directory with your source code.
+
+TIP: The devfile did all this for you: Building the stack from a custom image, cloning the sources from your Gitea repository.
 
 === Basic Application Configuration
 
@@ -62,19 +88,16 @@ Because the application you cloned is a template to make it work with your robot
 ** You could look up the URI in your 3Scale account, it should look like this example: *https://api-2445582274375.production.gw.apicast.io/api/robot*.
 ** For *APITOKEN* fill in your team name to route your requests to the proper robot
 
-Now commit these code changes to Gogs:
+Now commit these code changes to Gitea:
 
-In CodeReady click on Git→Commit
+In CodeReady click on the source control icon in the menubar to the left. This opens the Git view with the file *config.py* marked as changed. To stage, commit and push your changes:
 
-Type in a Commit message
+* In the Source Control view, move your mouse pointer over the *CHANGES* button and click the *+* sign to stage all changes.
+* On the top bar labelled *SOURCE CONTROL: GIT* press the check mark to commit the changes.
+* You will be asked to enter a commit message
+* Now push your changes by clicking the *...* button in the top bar and choose *Push* as operation. Enter your Gitea username and password.
 
-Make sure to check the *Push committed changes to* checkbox
-
-Click on Commit.
-
-After the code changes have been pushed to Git/Gogs you can build a new version of your app in OpenShift.
-
-TIP: If you want to see the changes that you have just pushed to Gogs you can have a look at your current repository in the Gogs Webui
+TIP: If you want to see the changes that you have just pushed to Gitea you can have a look at your current repository in the Gitea Web UI.
 
 == First build in OpenShift.
 
@@ -181,5 +204,26 @@ def run():
 
 +++ </div></details> +++
 
+=== Optional: Clone Gogs Repo into CodeReady Workspace
+
+If you don't have {url-codeready}[CodeReady^] open in your browser, login as your team. Then open the `Workspace` you already created: choose it in the *Dashboard* or *Workspaces* view and click the *OPEN* button in the upper right corner. 
+
+To start a new project with your sources from Gogs:
+
+* Click `*Import Project*`, choose `GIT` as Version Control System.
+* Paste your GIT Project URL from Gogs. Get it by copying the HTTP URL from your Gogs account, it should look like `*{url-gogs}/<GUID>/<GUID>-python.git*`
+* Edit the link and add your username and passwort to it for push authentication. It should now look like this: `*http://<GUID>:<PASSWORD>@{url-gogs}/<GUID>/<GUID>-python*`
+* Click on `*Import*`
+* In the project configuration window that comes up next leave or set to `*Blank*`
+* Click `*Save*`.
+
+In addition you have to edit the GIT user profile in Che: 
+
+* In the menu choose `*Profile->Prereferences*`
+* Select `*GIT Committer*`
+* Enter `*<GUID>*` in the name field and `*<GUID>@example.com*` in the E-Mail field. 
+* Click on `*Save*` and close the Window.
+
+Now is a good time to have a first look at the Python template application. It's deliberately simple as it's just meant to be a starting point. It's based on the Flask framework, it creates a simple webpage with a button to allow you to execute a method *run*. 
 
 

@@ -96,7 +96,15 @@ system/access, checkout code.... etc. And most of this would be specific to your
 Because we work in a cutting edge environment we'll use CodeReady Workspaces,
 a browser-based, cloud-native IDE running in the OpenShift environment.
 
-To access CodeReady in your browser click {url-codeready}[here^]. Login with `*<robot name>*` as username and password : {{OCP-PASSWORD}}.
+To access CodeReady in your browser click {url-codeready}[here^]. Then:
+
+* Login with your robot's name as username and the password : {{OCP-PASSWORD}}.
+* On first login a page *Authorize Access* will come up, just click the *Allow selected permissions* button.
+* On the next page you have to update some account information:
+** *Email*: <robotname>@example.com
+** *First name*: <somename>
+** *Last name*: <robotname> 
+** Click *Submit*
 
 ==== The Time has come: Choose your Runtime
 
@@ -106,13 +114,15 @@ TIP: You can choose between Java, Python and NodeJS. Every runtime comes with a 
 
 ==== Open the Runtime-Specific Guide 
 
-Depending on your programming language choice, please refer to one of the following guides on how to set up your application and get started. Start the guide by clicking the name in the side bar:
+Depending on your programming language choice, please refer to one of the following guides on how to set up your application and get started:
 
 * Java Springboot Robot App
 // * Java Quarkus Robot App
 * NodeJS Robot App
 * Python Robot App
 // * PHP Robot App
+
+Start the guide by clicking the name in the side bar and come back here when you have finished the runtime specific guide.
 
 == Now the Fun Starts!
 
