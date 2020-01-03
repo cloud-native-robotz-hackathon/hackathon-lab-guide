@@ -103,21 +103,32 @@ TIP: If you want to see the changes that you have just pushed to Gitea you can h
 
 You're ready to run the application the first time! But first make sure your team robot is connected to the power supply and switched on!
 
-Open the {url-ocpconsole}[OpenShift Web UI^]. If not already logged in, log in with `*<GUID>*` and the provided password.
+Again there is more then one way to deploy your application to OpenShift! We'll use the brand new *odo* ("OpenShift Do") command line client here, for other options see the end of this guide. The *odo* client is completely developer centric, it's capabilities are focused on building and deploying applications to OpenShift.
 
-. Click on the `*<GUID>-project*`
-. Click on *Browse Catalog* -> *Languages* -> *Python* and choose `*Phython*`.
-. Click on `*Next*`
-. As Python version keep 3.6
-. As `Application Name` use `*<GUID>-phython*` and as `GIT Repository` use `*{url-gogs}/<GUID>/<GUID>-python*`
-. Click on `*Create*` and `*Close*`
-. Click on `*Overview*` and then on the little `*>*` beside the `Deployment Config`.
-. You can watch the build steps in the lower right console
-. The application is deployed an ready when you see a blue circle indicating the number of healthy pods with you app
+=== Configure *odo*
+
+Bring up your dev environment in CodeReady Workspaces. If you closed it, open CodeReady, click the workspace and hit *OPEN*. Then in CodeReady Workspaces:
+
+* Choose *Terminal* -> *Open Terminal in specific container*
+* Choose the *Python* terminal
+
+Now *in the terminal window* configure *odo* by running:
+
+* `odo login https://api.{url-ocp-basepath}:6443`
+** Use your credentials (robot name and password) to login to OpenShift
+* `odo project create <robot name>-python` to create a new OpenShift project
+* Change into your project/source directory: `cd /projects/starter-app-python/`
+* Tell *odo* you are building a Python app: `odo create python`
+* The app should be exposed: `odo url create --port 8080`
+* And finally build the first version: `odo push`
+
+Watch *odo* do all the work for you (basically doing a source-to-image build) in CodeReady, or go to the OpenShift web console as your robot user and have a look what's happening in your project.
+
+After *odo* returns or the "app donut" in the web console (*Project* -> *Workloads* -> *Overview*) indicates one running Pod, you are ready to access your application. Get the app route either by running *odo describe* or by accessing the *Resources* tab of your projects *Workloads* page in the web console.
 
 === Check Robot
 
-After the build is complete, click the Link to your newly created application in the top right. It'll take you to the Python Robot Control Landing Page. From here you can execute a simple connectivity test of your robot by clicking *Status*.
+Open the route to your newly created application. It'll take you to the Python Robot Control Landing Page. From here you can execute a simple connectivity test of your robot by clicking *Status*. If this returns *OK*, your app can talk to your robot!
 
 === Run Robot!
 
@@ -129,12 +140,11 @@ If the robot moved, your setup is good and ready to go for the Hackathon!
 
 To get started with programming open the file *wsgi.py* and then edit the *run* method.
 
-Currently our robot is driving 5 cm forward. We want to let is drive 10 cm, so go ahead and find the parameter where the distance is set and change it accordingly. Commit and push the code as above.  
+Currently our robot is driving 5 cm forward. We want to let is drive 10 cm, so go ahead and find the parameter where the distance is set and change it accordingly. Re-build the app with the new code using *odo* by running `odo push` again.  
 
-After the code changes have been pushed to Git/Gogs you can build a new version of your app in OpenShift:
+After *odo* has finished reload your control application, hit the *Run* button and see if your code changes are in effect.
 
-. In the OpenShift Console in the *Overview* of your project click the three point menu above the blue circle
-. Choose *Start build* 
+WARNING: You might have noticed so far we didn't push our code changes to the Gitea repository. This works fine as long as you use *odo* to push changes directly to OpenShift, but if your CodeReady workspace gets into trouble you might loose your changes. So better push to Gitea every now and then the same way you did already.
 
 == Training Missions
 
@@ -144,9 +154,9 @@ Here are some training missions to get you started.
 
 * Plan what your robot should do, check the space for the square
 * Look up the robot API calls you might need in 3Scale
-* Add code in the *run* method and commit/push it with CodeReady
-* Start the Build in OpenShift
+* Add code in the *run* method and use *odo* to re-build the app
 * Test your code by running it from the robot control page
+* Push to Gitea regularly
 
 As everything happens in HTTP requests, if you manage to get your program into an endless loop or so, the easiest way to terminate your application might be to scale the Pod down in the OpenShift console. An even better idea is to limit loop runs.
 
@@ -225,5 +235,20 @@ In addition you have to edit the GIT user profile in Che:
 * Click on `*Save*` and close the Window.
 
 Now is a good time to have a first look at the Python template application. It's deliberately simple as it's just meant to be a starting point. It's based on the Flask framework, it creates a simple webpage with a button to allow you to execute a method *run*. 
+
+=== Optional: Build app from source without *odo*
+
+Open the {url-ocpconsole}[OpenShift Web UI^]. If not already logged in, log in with `*<robot name>*` and the provided password.
+
+. Click on the `*<GUID>-project*`
+. Click on *Browse Catalog* -> *Languages* -> *Python* and choose `*Phython*`.
+. Click on `*Next*`
+. As Python version keep 3.6
+. As `Application Name` use `*<GUID>-phython*` and as `GIT Repository` use `*{url-gogs}/<GUID>/<GUID>-python*`
+. Click on `*Create*` and `*Close*`
+. Click on `*Overview*` and then on the little `*>*` beside the `Deployment Config`.
+. You can watch the build steps in the lower right console
+. The application is deployed an ready when you see a blue circle indicating the number of healthy pods with you app
+
 
 
