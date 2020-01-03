@@ -15,7 +15,7 @@ quickly get you started with your first robot application. It’s provided in a 
 
 == Migrate the Python Example into your Git Repo
 
-. Login to your {url-gogs}[Gitea^] account with your robot name as username  and the provided password.
+. Open the {url-gogs}[Gitea^] web UI.
 . Click on the `*+*` in the upper right and choose `*New Migration*`.
 . Fill in the `*Clone Address*` field: `*https://github.com/cloud-native-robotz-hackathon/starter-app-python.git*`
 . The `*Repository Name*` field should be `*starter-app-python*`
@@ -31,10 +31,7 @@ To get started hacking you have to:
 * Start a runtime-specific CodeReady development workspace containing the tools you need
 * Have your code cloned into the development environment
 
-You could use one of two options to do this in CodeReady Workspaces:
-
-* Start a workspace in CodeReady from the list of available stacks and configure the project with a Git repository URL  
-* Use CodeReady's *devfile* mechanism.
+You could start a workspace in CodeReady and clone your repo manually or use CodeReady's *devfile* mechanism. The *devfile* method is pretty cool, so we'll use it here.
 
 === Configure CodeReady Workspaces using a devfile
 
@@ -46,7 +43,7 @@ Your repository already contains a *devfile.yaml* (go to the Gitea web UI and ha
 * Open the *devfile.yaml* by clicking it and press the pencil icon to switch to edit mode. 
 * In edit mode change 
 ----
-location: 'https://github.com/goetzrieger/starter-app-python.git' 
+location: 'https://github.com/cloud-native-robotz-hackathon/starter-app-python.git' 
 ----
 
 to match your own repo url, e.g.:

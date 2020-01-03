@@ -87,6 +87,13 @@ Your team user has already been created for you, your user name is `*<robot name
 
 That's it for now, we'll come back later, no worries.
 
+=== Accessing the Git Repository
+
+As Git repository we're using Gitea, an Open Source Git server. Gitea runs as container application in OpenShift, of course. To access Gitea:
+
+* Open {url-gogs}[Gitea^] in your browser
+* Login with `*<robot name>*`, and password : {{OCP-PASSWORD}}
+
 === Your first application
 
 So we are ready to start with some coding. Normally you would now have to setup your 
@@ -147,7 +154,7 @@ Good Luck and Robotz Go, Go, Go!
 
 {url-codeready}[CodeReady Workspaces Web UI^]
 
-{url-gogs}[Gogs Web UI^]
+{url-gogs}[Gitea Web UI^]
 
 
 
