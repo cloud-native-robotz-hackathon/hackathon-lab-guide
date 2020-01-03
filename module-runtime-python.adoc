@@ -114,13 +114,13 @@ Now *in the terminal window* configure *odo* by running:
 
 * `odo login \https://api.{url-ocp-basepath}:6443`
 ** Confirm insecure connection and then use your credentials (<robot name> and password) to login to OpenShift
-* `odo project create <robot name>-python` to create a new OpenShift project
+* `odo project create <robot name>-python-dev` to create a new OpenShift project
 * Change into your project/source directory: `cd /projects/starter-app-python/`
 * Tell *odo* you are building a Python app: `odo create python`
 * Create a URL to access your app: `odo url create --port 8080`
 * Build and deploy the first version: `odo push`
 
-Watch *odo* do all the work for you in CodeReady, or go to the OpenShift web console and have a look what's happening in your project (*Projects -> <robot name>-python*).
+Watch *odo* do all the work for you in CodeReady, or go to the OpenShift web console and have a look what's happening in your project (*Projects -> <robot name>-python-dev*).
 
 After *odo* returns you are ready to access your application. Get the full URL to your app (called a *route* in OpenShift) either by running *odo describe* or by accessing the *Resources* tab of your projects *Workloads* page in the web console.
 
@@ -142,7 +142,11 @@ Currently our robot is driving 10 cm forward. We want to let it drive 15 cm, so 
 
 After *odo* has finished reload your control application, hit the *Run* button and see if your code changes are in effect.
 
-WARNING: You might have noticed so far we didn't push our code changes to the Gitea repository. This works fine as long as you use *odo* to push changes directly to OpenShift, but if your CodeReady workspace gets into trouble you might loose your changes. So better push to Gitea every now and then the same way you did already.
+== Final Remarks
+
+You might have noticed so far we didn't push our code changes to Gitea. This works fine as long as you use *odo* to push changes directly to OpenShift, but if you loose your CodeReady workspace for any reason your code changes will be gone. So better push to Gitea every now and then the way you did already.
+
+As a true DevOps team you can be agile during development in your dev project. But for the prod release you'll have to provide a deployment based on a defined Git version using OpenShift's source-2-image build method. For now go through the training missions, we'll explain the source-2-image method at the end of this guide.
 
 == Training Missions
 
@@ -212,41 +216,55 @@ def run():
 
 +++ </div></details> +++
 
-=== Optional: Clone Gogs Repo into CodeReady Workspace
+== Now the Fun Starts!
 
-If you don't have {url-codeready}[CodeReady^] open in your browser, login as your team. Then open the `Workspace` you already created: choose it in the *Dashboard* or *Workspaces* view and click the *OPEN* button in the upper right corner. 
+Okay, by now you should have:
 
-To start a new project with your sources from Gogs:
+* set up a complete Cloud Native Development Environment using Python as your programming language of choice  
+* gone through some training missions to get you up to speed
 
-* Click `*Import Project*`, choose `GIT` as Version Control System.
-* Paste your GIT Project URL from Gogs. Get it by copying the HTTP URL from your Gogs account, it should look like `*{url-gogs}/<GUID>/<GUID>-python.git*`
-* Edit the link and add your username and passwort to it for push authentication. It should now look like this: `*http://<GUID>:<PASSWORD>@{url-gogs}/<GUID>/<GUID>-python*`
-* Click on `*Import*`
-* In the project configuration window that comes up next leave or set to `*Blank*`
-* Click `*Save*`.
+You have all the information to get started hacking the robot!
 
-In addition you have to edit the GIT user profile in Che: 
+=== Final Mission
 
-* In the menu choose `*Profile->Prereferences*`
-* Select `*GIT Committer*`
-* Enter `*<GUID>*` in the name field and `*<GUID>@example.com*` in the E-Mail field. 
-* Click on `*Save*` and close the Window.
+As explained your mission will be to navigate your robot through an unkown labyrinth with a combination of driving and distance checks. So prepare and test your robot with different maze variations.
 
-Now is a good time to have a first look at the Python template application. It's deliberately simple as it's just meant to be a starting point. It's based on the Flask framework, it creates a simple webpage with a button to allow you to execute a method *run*. 
+== Feature Freeze!
 
-=== Optional: Build app from source without *odo*
+When it's time for the final challenge you have to build your production release.  
 
-Open the {url-ocpconsole}[OpenShift Web UI^]. If not already logged in, log in with `*<robot name>*` and the provided password.
+=== Build and Deploy App with Source-2-Image
 
-. Click on the `*<GUID>-project*`
-. Click on *Browse Catalog* -> *Languages* -> *Python* and choose `*Phython*`.
-. Click on `*Next*`
-. As Python version keep 3.6
-. As `Application Name` use `*<GUID>-phython*` and as `GIT Repository` use `*{url-gogs}/<GUID>/<GUID>-python*`
-. Click on `*Create*` and `*Close*`
-. Click on `*Overview*` and then on the little `*>*` beside the `Deployment Config`.
-. You can watch the build steps in the lower right console
-. The application is deployed an ready when you see a blue circle indicating the number of healthy pods with you app
+To build the final release, follow these steps:
+
+* Make sure your latest code version has been pushed to Gitea
+* In the OpenShift console switch to the Developer persona by selecting *Developer* from the drop-down menu to the upper left.
+* Create a new project for your production release by choosing *Projects* from the *Advanced* menu.
+* Click the *Create Project* button and create a project named *<robot-name>-python-prod*
+* Click *+Add* in the left menu and select the *From Git* tile
+* Fill in the fields
+** *Git Repo URL*: Clone URL from your Gitea repo
+** Make sure *Git Type* is set to *Other*
+** As *Builder Image* choose the Python tile (make sure version is 3.6)
+** Under *General* *application* and *Name* are pre-filled, leave as is
+* Finally hit the *Create* button!
+
+You will be taken to the *Topology* view, the circular arrow icon indicates the running bild process. When the build has finished, is turns into a green check mark.
+
+After the build has finished, open the application by clicking the top right icon to open it.
+
+Good Luck and Robotz Go, Go, Go! 
+
+== Links
+
+{url-3scale}[3Scale Web UI^]
+
+{url-ocpconsole}[OpenShift Web UI^]
+
+{url-codeready}[CodeReady Workspaces Web UI^]
+
+{url-gogs}[Gitea Web UI^]
+
 
 
 

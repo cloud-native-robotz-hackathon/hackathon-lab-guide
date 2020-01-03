@@ -129,22 +129,7 @@ Depending on your programming language choice, please refer to one of the follow
 * Python Robot App
 // * PHP Robot App
 
-Start the guide by clicking the name in the side bar and come back here when you have finished the runtime specific guide.
-
-== Now the Fun Starts!
-
-Okay, by now you should have:
-
-* set up a complete Cloud Native Development Environment using the programming language of your choice  
-* gone through some training missions to get you up to speed
-
-You have all the information to get started hacking the robot!
-
-=== Final Mission
-
-As explained your mission will be to navigate your robot through an unkown labyrinth with a combination of driving and distance checks. So prepare and test your robot with different maze variations.
-
-Good Luck and Robotz Go, Go, Go! 
+Start the guide by clicking the name in the side bar.
 
 == Links
 
