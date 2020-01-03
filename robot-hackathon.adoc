@@ -106,8 +106,8 @@ To access CodeReady in your browser click {url-codeready}[here^]. Then:
 * Login with your robot's name as username and the password : {{OCP-PASSWORD}}.
 * On first login a page *Authorize Access* will come up, just click the *Allow selected permissions* button.
 * On the next page you have to update some account information:
-** *Email*: <robotname>@example.com
-** *First name*: <some name>
+** *Email*: <robot name>@example.com
+** *First name*: <robot name>
 ** *Last name*: <robot name> 
 ** Click *Submit*
 
