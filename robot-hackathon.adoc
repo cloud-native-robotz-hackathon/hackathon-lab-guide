@@ -43,8 +43,7 @@ the API of your robot. 3Scale will take care of routing your requests to the
 Hub-Controller which in turn accesses your robot. 
 
 WARNING: The most important information is the *Key* from the *Credentials* 
-box. Using this key as parameter *user_key* in your API calls takes care of routing the 
-requests to the proper robot. Your *Key* is: `*<your robot name>*`
+box. Using this key as parameter *user_key* in your API calls takes care of routing the requests to the proper robot. 
 
 ==== Testing the API
 
@@ -63,14 +62,14 @@ If you don't have a laptop with the `curl`-command don't worry, you can test thi
 
 There are a number of ways to test the connectivity from your PC via 3Scale to 
 the robot. You basically need to construct an URL to query the API using 
-the 3Scale access token.
+the 3Scale *Key*.
 
 While in the 3Scale web UI access the *DOCUMENTATION* link in the menu bar. 
 Here you will find the REST API documentation of all robot operation currently 
 exposed in OpenAPI/Swagger format.
 
 You can test the available API calls from here. These will actually go to your 
-robot. Just remember to fill in `*<robot name>*` as `USER_KEY` when you test.
+robot. Just remember to fill in `*<robot name>*` as *USER_KEY* when you test.
 
 TIP: Why don't you let the little guy drive around for a few cm?
 
@@ -86,15 +85,14 @@ Your team user has already been created for you, your user name is `*<robot name
 * Accept the self-signed certificate in you browser 
 * Look around the OpenShift Console
 
+That's it for now, we'll come back later, no worries.
 
 === Your first application
 
 So we are ready to start with some coding. Normally you would now have to setup your 
-dev environment on your laptop... install IDE, language runtimes, build tools, version control 
-system/access, checkout code.... etc. And most of this would be specific to your OS.
+dev environment on your laptop... install IDE, language runtimes, build tools, version control system/access, checkout code.... etc. And most of this would be specific to your OS.
 
-Because we work in a cutting edge environment we'll use CodeReady Workspaces,
-a browser-based, cloud-native IDE running in the OpenShift environment.
+Because we work in a cutting edge environment we'll use CodeReady Workspaces, a browser-based, cloud-native IDE running in the OpenShift environment.
 
 To access CodeReady in your browser click {url-codeready}[here^]. Then:
 
@@ -102,9 +100,11 @@ To access CodeReady in your browser click {url-codeready}[here^]. Then:
 * On first login a page *Authorize Access* will come up, just click the *Allow selected permissions* button.
 * On the next page you have to update some account information:
 ** *Email*: <robotname>@example.com
-** *First name*: <somename>
-** *Last name*: <robotname> 
+** *First name*: <some name>
+** *Last name*: <robot name> 
 ** Click *Submit*
+
+TIP: Authentication for CodeReady Workspaces is handled by Red Hat Single Sign-On. You have to go through these steps once to grant access. 
 
 ==== The Time has come: Choose your Runtime
 
