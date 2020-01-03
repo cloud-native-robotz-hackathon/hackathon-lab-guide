@@ -4,7 +4,7 @@
 :url-ocpconsole: https://console-openshift-console.apps.{url-ocp-basepath}
 :url-codeready: http://codeready-codeready.apps.{url-ocp-basepath}
 :url-3scale: {{URL-3SCALE}}
-:url-gogs: https://gitea-gitea.apps.{url-ocp-basepath}
+:url-gogs: http://gitea-gitea.apps.{url-ocp-basepath}
 
 == Introduction
 
