@@ -10,9 +10,9 @@ modules:
     name: Python Robot App
   module-runtime-nodejs:
     name: NodeJS Robot App
-  module-runtime-java-quarkus:
-    name: Java Quarkus Robot App
-  module-runtime-php:
-    name: PHP Robot App      
+#  module-runtime-java-quarkus:
+#    name: Java Quarkus Robot App
+ # module-runtime-php:
+#    name: PHP Robot App      
 
  

@@ -14,8 +14,8 @@ modules:
   activate:
   - robot-hackathon
   - module-runtime-java-springboot
-  - module-runtime-java-quarkus
+  # - module-runtime-java-quarkus
   - module-runtime-nodejs
   - module-runtime-python
-  - module-runtime-php
+  # - module-runtime-php
 
