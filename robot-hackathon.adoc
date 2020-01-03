@@ -35,7 +35,7 @@ team and want to be on the same page. Also the cloud system is sized for one acc
 Okay, let's get started. Head over to the {url-3scale}[3Scale web UI^] and:
 
 * Click on `*SIGN IN*` in the upper right
-* Login with your team credentials (the name of your robot and password : {{OCP-PASSWORD}}
+* Login with your credentials (your <robot name> and password : {{OCP-PASSWORD}}
 * After login you will see the API key you need to access the robot API
 
 TIP: Look around in the 3Scale web UI, you will see examples of how to invoke 

@@ -54,7 +54,7 @@ location: 'http://gitea-gitea.apps.cluster-berlin-5375.berlin-5375.example.opent
 * Click the *Commit Changes* button
 
 
-Now point CodeReady Workspaces to the *devfile.yaml* using a special URL in the form of *http://codeready.url/f?url=http://gitrepo.url/devfile.yaml*. First get the raw URL of your devfile:
+Now point CodeReady Workspaces to the *devfile.yaml* using a special URL in the form of *\http://codeready.url/f?url=http://gitrepo.url/devfile.yaml*. First get the raw URL of your devfile:
 
 * Open it by clicking the *Raw* button in Gitea
 * Copy the URL from your browser
@@ -73,29 +73,29 @@ You are ready to go when the *Welcome To Your Workspace* comes up.
 
 * Close the welcome page (by clicking the *x*)
 * Open the Explorer by choosing the pages icon in the menubar to the left
-* Open the project directory with your source code.
+* Open the project directory *starter-app-python* with your source code.
 
 TIP: The devfile did all this for you: Building the stack from a custom image, cloning the sources from your Gitea repository.
 
 === Basic Application Configuration
 
-Because the application you cloned is a template to make it work with your robot you have to configure the connection details first:
+Because the application you cloned is a template, to make it work with your robot you have to configure the connection details first:
 
 * Expand the project tree on the left and open the *config.py* file by double-clicking it
-* Change the *URI* and *APITOKEN* parameters
-** You could look up the URI in your 3Scale account, it should look like this example: *https://api-2445582274375.production.gw.apicast.io/api/robot*.
-** For *APITOKEN* fill in your team name to route your requests to the proper robot
+* Change the *URI* (if required) and the *APITOKEN* parameter
+** You could look up the URI in your 3Scale account, it should look like this example: *\https://api-2445582274375.production.gw.apicast.io/api/robot*.
+** For *APITOKEN* fill in your <robot name>
 
 Now commit these code changes to Gitea:
 
 In CodeReady click on the source control icon in the menubar to the left. This opens the Git view with the file *config.py* marked as changed. To stage, commit and push your changes:
 
-* In the Source Control view, move your mouse pointer over the *CHANGES* button and click the *+* sign to stage all changes.
-* On the top bar labelled *SOURCE CONTROL: GIT* press the check mark to commit the changes.
+* In the Source Control view, move your mouse pointer over the *CHANGES* bar and click the *+* sign to stage all changes.
+* On the top bar *SOURCE CONTROL: GIT* press the check mark to commit the changes.
 * You will be asked to enter a commit message
-* Now push your changes by clicking the *...* button in the top bar and choose *Push* as operation. Enter your Gitea username and password.
+* Now push your changes by clicking the *...* button in the top bar and choose *Push* as operation. Enter your <robot name> as username and the password {{OCP-PASSWORD}}.
 
-TIP: If you want to see the changes that you have just pushed to Gitea you can have a look at your current repository in the Gitea Web UI.
+TIP: If you want to see the changes that you have just pushed to Gitea you can have a look at your current repository in the {url-gogs}[Gitea^] Web UI.
 
 == First build in OpenShift.
 
@@ -112,25 +112,25 @@ Bring up your dev environment in CodeReady Workspaces. If you closed it, open Co
 
 Now *in the terminal window* configure *odo* by running:
 
-* `odo login https://api.{url-ocp-basepath}:6443`
-** Use your credentials (robot name and password) to login to OpenShift
+* `odo login \https://api.{url-ocp-basepath}:6443`
+** Confirm insecure connection and then use your credentials (<robot name> and password) to login to OpenShift
 * `odo project create <robot name>-python` to create a new OpenShift project
 * Change into your project/source directory: `cd /projects/starter-app-python/`
 * Tell *odo* you are building a Python app: `odo create python`
-* The app should be exposed: `odo url create --port 8080`
-* And finally build the first version: `odo push`
+* Create a URL to access your app: `odo url create --port 8080`
+* Build and deploy the first version: `odo push`
 
-Watch *odo* do all the work for you (basically doing a source-to-image build) in CodeReady, or go to the OpenShift web console as your robot user and have a look what's happening in your project.
+Watch *odo* do all the work for you in CodeReady, or go to the OpenShift web console and have a look what's happening in your project (*Projects -> <robot name>-python*).
 
-After *odo* returns or the "app donut" in the web console (*Project* -> *Workloads* -> *Overview*) indicates one running Pod, you are ready to access your application. Get the app route either by running *odo describe* or by accessing the *Resources* tab of your projects *Workloads* page in the web console.
+After *odo* returns you are ready to access your application. Get the full URL to your app (called a *route* in OpenShift) either by running *odo describe* or by accessing the *Resources* tab of your projects *Workloads* page in the web console.
 
 === Check Robot
 
-Open the route to your newly created application. It'll take you to the Python Robot Control Landing Page. From here you can execute a simple connectivity test of your robot by clicking *Status*. If this returns *OK*, your app can talk to your robot!
+Open the *route* (URL) to your newly created application in your browser. It'll take you to the Python Robot Control Landing Page. From here you can execute a simple connectivity test of your robot by clicking *Status*. If this returns *OK*, your app can talk to your robot!
 
 === Run Robot!
 
-To execute the *run* method click the `*Run*` button. Execution will take some seconds but then the robot should move some centimeters forward.
+To execute the *run* method click the *Run* button. Execution will take some seconds but then the robot should move some centimeters forward.
 
 If the robot moved, your setup is good and ready to go for the Hackathon!
 
@@ -138,7 +138,7 @@ If the robot moved, your setup is good and ready to go for the Hackathon!
 
 To get started with programming open the file *wsgi.py* and then edit the *run* method.
 
-Currently our robot is driving 5 cm forward. We want to let is drive 10 cm, so go ahead and find the parameter where the distance is set and change it accordingly. Re-build the app with the new code using *odo* by running `odo push` again.  
+Currently our robot is driving 10 cm forward. We want to let it drive 15 cm, so go ahead and find the parameter where the distance is set and change it accordingly. Re-build the app with the new code using *odo* by running `odo push` again.  
 
 After *odo* has finished reload your control application, hit the *Run* button and see if your code changes are in effect.
 
