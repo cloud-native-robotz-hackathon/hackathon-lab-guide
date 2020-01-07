@@ -7,48 +7,295 @@
 :url-gogs: http://gogs-hackathon.apps.{url-ocp-basepath}
 
 
-Welcome to the Java module. You choose wisely as Java is still one of the most popular programming languages around.  
+== Welcome Java Developers!
+
+You choose wisely as Java is still one of the most popular programming languages around.  
 
 Robot Services Ltd has provided a basic Spring Boot-based Java application template to 
 quickly get you started with your first robot application. It's provided in a 
-GitHub repository. You will migrate this template project into your team's Git (Gogs) repository running in OpenShift and start to developing in it.
+GitHub repository. You will migrate this template project into your team's Git (Gitea) repository running in OpenShift and start to developing in it.
 
-To migrate the template project into Gogs:
+== Migrate the Java Application Template into your Git Repo
 
-* Go to the Gogs Url in you browser: {url-gogs}[Gogs^]
-* Click *Sign In* in the top right corner 
-* Log in
-** Username : <GUID>
-** Password : <The standard password provided>
-* In the top right corner click on the plus sign (Create) and choose *New Migration* 
-* Enter
+. Open the {url-gogs}[Gitea^] web UI.
+. Click on the `*+*` in the upper right and choose `*New Migration*`.
 ** *Clone Address :* https://github.com/cloud-native-robotz-hackathon/starter-app-java.git
-** *Repository Name :* <GUID>-robot-app
+** *Repository Name :* `*starter-app-java*`
 * Make sure the repository is set to *public*
 * Keep the rest as is
 * Click on *Migrate Repository*
 
-Now you have the application template in your team's git repository and can get started with hacking. For this you need to clone your repository into your Development Environment (CodeReady Workspaces) running on OpenShift.
+== Configure and Run
 
-To clone you repository into CodeReady : 
+In this Hackathon you'll use CodeReady Workspaces for development. You should already be logged-in to CodeReady Workspaces as your robot user.
 
-* Go back to CodeReady : {url-codeready}[CodeReady^]
-* Log in (if required)
-** Username : <GUID>
-** Password : <The standard password provided>
-* If you just loggend in again you can find you previously created workspace on the left
-** Click on *<GUID>-robot-app-workspace* and the the button *Open* to open the workspace again        
-* Once your workspace is ready, click *Import Project*
-** You can also find this option in the top menu *Workspace > Import Project*
-* In the *Import project* window:
-** Choose *GIT*
-** *URL of your Git repo*: {url-gogs}/<GUID>/<GUID>-robot-app.git
-* In the next dialog choose *Java -> Maven*
-* Click *Save*
+To get started hacking you have to:
+
+* Start a runtime-specific CodeReady development workspace containing the tools you need
+* Have your code cloned into the development environment
+
+You could start a workspace in CodeReady and clone your repo manually or use CodeReady's *devfile* mechanism. The *devfile* method is pretty cool, so we'll use it here.
+
+=== Configure CodeReady Workspaces using a devfile
+
+TIP: A devfile is a simple yaml file that describes your CodeReady Workspaces environment: the stack image to use, the Git repository to clone and more.
+
+Your repository already contains a *devfile.yaml* (go to the Gitea web UI and have a look if you are interested). To use it:
+
+* Go to the {url-gogs}[Gitea^] web UI again, open the new repo and copy the HTTP clone URL. 
+* Open the *devfile.yaml* by clicking it and press the pencil icon to switch to edit mode. 
+* In edit mode change 
+----
+location: 'https://github.com/cloud-native-robotz-hackathon/starter-app-java.git' 
+----
+
+to match your own repo url, e.g.:
+----
+location: 'http://gitea-gitea.apps.cluster-berlin-5375.berlin-5375.example.opentlc.com/terminator/starter-app-java.git' 
+----
+
+* Click the *Commit Changes* button
+
+
+Now point CodeReady Workspaces to the *devfile.yaml* using a special URL in the form of *\http://codeready.url/f?url=http://gitrepo.url/devfile.yaml*. First get the raw URL of your devfile:
+
+* Open it by clicking the *Raw* button in Gitea
+* Copy the URL from your browser
+* Open the URL in a new browser tab: 
+
+[subs="attributes"]
+----
+{url-codeready}/f?url=&lt;your-devfile-raw-url> 
+----
+
+This will bring up an animated construction image while building your dev environment. Hit the *Back to Dashboard* link at the lower left, you will see your workspace being build in the CodeReady web UI. Click the workspace name and then *OPEN*. Watch your workspace building.
+
+TIP: This can take a couple of minutes because it has to pull the stack image into OpenShift.
+
+You are ready to go when the *Welcome To Your Workspace* comes up. 
+
+* Close the welcome page (by clicking the *x*)
+* Open the Explorer by choosing the pages icon in the menubar to the left
+* Open the project directory *starter-app-java* with your source code.
+
+TIP: The devfile did all this for you: Building the stack from a custom image, cloning the sources from your Gitea repository.
+
+=== Basic Application Configuration
+
+Because the application you cloned is a template, to make it work with your robot you have to configure the connection details first:
+
+* Expand the project tree on the left and open the *src/main/resources/application.properties* file by double-clicking it
+* Change the *hub.controller.uri* (if required) and the *3scale.token* parameter
+** You could look up the URI in your 3Scale account, it should look like this example: *\https://api-2445582274375.production.gw.apicast.io/api/robot*.
+** For *3scale.token* fill in your <robot name>
+
+Now commit these code changes to Gitea:
+
+In CodeReady click on the source control icon in the menubar to the left. This opens the Git view with the file *application.properties* marked as changed. To stage, commit and push your changes:
+
+* In the Source Control view, move your mouse pointer over the *CHANGES* bar and click the *+* sign to stage all changes.
+* On the top bar *SOURCE CONTROL: GIT* press the check mark to commit the changes.
+* You will be asked to enter a commit message
+* Now push your changes by clicking the *...* button in the top bar and choose *Push* as operation. Enter your <robot name> as username and the password {{OCP-PASSWORD}}.
+
+TIP: If you want to see the changes that you have just pushed to Gitea you can have a look at your current repository in the {url-gogs}[Gitea^] Web UI.
+
+== First build in OpenShift.
+
+You're ready to run the application the first time! But first make sure your team robot is connected to the power supply and switched on!
+
+Again there is more then one way to deploy your application to OpenShift! We'll use the brand new *odo* ("OpenShift Do") command line client here, for other options see the end of this guide. The *odo* client is completely developer centric, it's capabilities are focused on building and deploying applications to OpenShift.
+
+=== Configure *odo*
+
+Bring up your dev environment in CodeReady Workspaces. If you closed it, open CodeReady, click the workspace and hit *OPEN*. Then in CodeReady Workspaces:
+
+* Choose *Terminal* -> *Open Terminal in specific container*
+* Choose the *Maven* terminal
+
+Now *in the terminal window* configure *odo* by running:
+
+* `odo login \https://api.{url-ocp-basepath}:6443`
+** Confirm insecure connection and then use your credentials (<robot name> and password) to login to OpenShift
+* `odo project create <robot name>-java-dev` to create a new OpenShift project
+* Change into your project/source directory: `cd /projects/starter-app-java/`
+* Tell *odo* you are building a Java app: `odo create java`
+* Create a URL to access your app: `odo url create --port 8080`
+* Build and deploy the first version: `odo push`
+
+Watch *odo* do all the work for you in CodeReady, or go to the OpenShift web console and have a look what's happening in your project (*Projects -> <robot name>-java-dev*).
+
+After *odo* returns you are ready to access your application. Get the full URL to your app (called a *route* in OpenShift) either by running *odo describe* or by accessing the *Resources* tab of your projects *Workloads* page in the web console.
+
+=== Run Robot!
+
+Open the *route* (URL) to your newly created application in your browser. It'll take you to the Python Robot Control Landing Page. To execute the *run* method click the *Run* button. Execution will take some seconds but then the robot should move some centimeters forward.
+
+If the robot moved, your setup is good and ready to go for the Hackathon!
+
+== Start Hacking
+
+To get started with programming open the file *src/main/java/io/openshift/booster/service/RobotEndpoint.java* and then edit the *run* method.
+
+Currently our robot is driving 10 cm forward. We want to let it drive 15 cm, so go ahead and find the parameter where the distance is set and change it accordingly. Re-build the app with the new code using *odo* by running `odo push` again.  
+
+After *odo* has finished reload your control application, hit the *Run* button and see if your code changes are in effect.
+
+== Final Remarks
+
+You might have noticed so far we didn't push our code changes to Gitea. This works fine as long as you use *odo* to push changes directly to OpenShift, but if you loose your CodeReady workspace for any reason your code changes will be gone. So better push to Gitea every now and then the way you did already.
+
+As a true DevOps team you can be agile during development in your dev project. But for the prod release you'll have to provide a deployment based on a defined Git version using OpenShift's source-2-image build method. For now go through the training missions, we'll explain the source-2-image method at the end of this guide.
+
+== Training Missions
+
+Here are some training missions to get you started.
+
+*Hints:*
+
+* Plan what your robot should do, check the space for the square
+* Look up the robot API calls you might need in 3Scale
+* Add code in the *run* method and use *odo* to re-build the app
+* Test your code by running it from the robot control page
+* Push to Gitea regularly
+
+As everything happens in HTTP requests, if you manage to get your program into an endless loop or so, the easiest way to terminate your application might be to scale the Pod down in the OpenShift console. An even better idea is to limit loop runs.
+
+If you want to see e.g. debug messages you put into your code, open the Logs window of your Pod in Openshift.
+
+=== Task: Make your robot drive in a square with approx 10cm edge length
+
+Hints:
+
+* Plan what your robot should do, check the space for the square.
+* Look up the API calls you need (remember the API documentation?)
+* Change the code in the *run()* method (have a look at the commented out code 
+examples for REST POST and GET Requests)
+* Be aware that the motors and sensors of the robot are not a 100% precise. So you may need to add some adjustment to your turns and moves
+* Add some System.put.println commands like in the example to check what the sensors are returning and what the robot is up to. This makes it easier to analyze what is going on
+* Push your test versions with *odo*
+
++++ <details><summary> +++
+*>> _Click here for the solution_ <<*
++++ </summary><div> +++
+
+----
+ MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<String, 
+String>();
+        paramMap.add("user_key", "<API Key>");
+        HttpEntity<MultiValueMap<String, String>> request = new 
+HttpEntity<MultiValueMap<String, String>>(paramMap,
+                new LinkedMultiValueMap<String, String>());
+        response = restTemplate.postForObject(hubControllerEndpoint + 
+"/forward/20", request, String.class);
+        response = restTemplate.postForObject(hubControllerEndpoint + 
+"/left/90", request, String.class);
+        response = restTemplate.postForObject(hubControllerEndpoint + 
+"/forward/20", request, String.class);
+        response = restTemplate.postForObject(hubControllerEndpoint + 
+"/left/90", request, String.class);
+        response = restTemplate.postForObject(hubControllerEndpoint + 
+"/forward/20", request, String.class);
+        response = restTemplate.postForObject(hubControllerEndpoint + 
+"/left/90", request, String.class);
+        response = restTemplate.postForObject(hubControllerEndpoint + 
+"/forward/20", request, String.class);
+        response = restTemplate.postForObject(hubControllerEndpoint + 
+"/left/90", request, String.class);
+----
+
++++ </div></details> +++
+
+=== Task: Make your robot stop before hitting the wall
+
+Setup a barrrier/wall and program your robot so it moves to the wall but stops in time before hitting it. You'll need the forward() and distance() functions.
+
++++ <details><summary> +++
+*>> _Click here for the solution_ <<*
++++ </summary><div> +++
+
+
+This is again not programmed in a particularly smart way, it's just an intro. Feel free to enhance!
+
+Notice the exit criteria after 10 loops to make sure we are not running into an endless loops.  
+
+----
+ MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<String, String>();
+        paramMap.add("user_key", "<GUID>");
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(paramMap,
+                new LinkedMultiValueMap<String, String>());
+        
+    int loopCount = 0;
+    System.out.println("Initial distance " + restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=<GUID>", String.class));
+    
+    while (Integer.valueOf(restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=<GUID>", String.class)) > 100 && loopCount < 10  )
+    {
+        
+        System.out.println("Loop run " + i + " , current distance " + restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=r2d2", String.class));
+        
+        response = restTemplate.postForObject(hubControllerEndpoint + "/forward/5", request, String.class);
+        loopCount++;
+                
+    }
+----
+
++++ </div></details> +++
+
+TIP: You may wrap your REST calls into functions to make them easier to use
+
+
+== Now the Fun Starts!
+
+Okay, by now you should have:
+
+* set up a complete Cloud Native Development Environment using Python as your programming language of choice  
+* gone through some training missions to get you up to speed
+
+You have all the information to get started hacking the robot!
+
+=== Final Mission
+
+As explained your mission will be to navigate your robot through an unkown labyrinth with a combination of driving and distance checks. So prepare and test your robot with different maze variations.
+
+== Feature Freeze!
+
+When it's time for the final challenge you have to build your production release.  
+
+=== Build and Deploy App with Source-2-Image
+
+To build the final release, follow these steps:
+
+* Make sure your latest code version has been pushed to Gitea
+* In the OpenShift console switch to the Developer persona by selecting *Developer* from the drop-down menu to the upper left.
+* Create a new project for your production release by choosing *Projects* from the *Advanced* menu.
+* Click the *Create Project* button and create a project named *<robot-name>-java-prod*
+* Click *+Add* in the left menu and select the *From Git* tile
+* Fill in the fields
+** *Git Repo URL*: Clone URL from your Gitea repo
+** Make sure *Git Type* is set to *Other*
+** As *Builder Image* choose the Java tile (make sure version is 8)
+** Under *General* *application* and *Name* are pre-filled, leave as is
+* Finally hit the *Create* button!
+
+You will be taken to the *Topology* view, the circular arrow icon indicates the running bild process. When the build has finished, is turns into a green check mark.
+
+After the build has finished, open the application by clicking the top right icon to open it.
+
+Good Luck and Robotz Go, Go, Go! 
+
+== Links
+
+{url-3scale}[3Scale Web UI^]
+
+{url-ocpconsole}[OpenShift Web UI^]
+
+{url-codeready}[CodeReady Workspaces Web UI^]
+
+{url-gogs}[Gitea Web UI^]
 
 
 
-=== Running the Application Locally
+== FALLBACK : Running the Application Locally
 
 *Open a new terminal* in your CodeReady workspace by clicking the *+* sign and *Terminal* in the 
 lower workspace pane. Change into your project directory:
@@ -174,89 +421,11 @@ Now your basic development and deployment workflow is ready.
 
 == Training Mission
 
-=== Task: Make your robot drive in a square with approx 20cm edge length
 
-Hints:
-
-* Plan what your robot should do, check the space for the square.
-* Look up the API calls you need (remember the API documentation?)
-* Change the code in the *run()* method (have a look at the commented out code 
-examples for REST POST and Get Requests)
-* Test locally in CodeReady if you want to
-* Be aware that the motors and sensors of the robot are not a 100% precise. So you may need to add some adjustment to your turns and moves.
-* Deploy to OpenShift and run
-
-+++ <details><summary> +++
-*>> _Click here for the solution_ <<*
-+++ </summary><div> +++
-
-----
- MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<String, 
-String>();
-        paramMap.add("user_key", "<API Key>");
-        HttpEntity<MultiValueMap<String, String>> request = new 
-HttpEntity<MultiValueMap<String, String>>(paramMap,
-                new LinkedMultiValueMap<String, String>());
-        response = restTemplate.postForObject(hubControllerEndpoint + 
-"/forward/20", request, String.class);
-        response = restTemplate.postForObject(hubControllerEndpoint + 
-"/left/90", request, String.class);
-        response = restTemplate.postForObject(hubControllerEndpoint + 
-"/forward/20", request, String.class);
-        response = restTemplate.postForObject(hubControllerEndpoint + 
-"/left/90", request, String.class);
-        response = restTemplate.postForObject(hubControllerEndpoint + 
-"/forward/20", request, String.class);
-        response = restTemplate.postForObject(hubControllerEndpoint + 
-"/left/90", request, String.class);
-        response = restTemplate.postForObject(hubControllerEndpoint + 
-"/forward/20", request, String.class);
-        response = restTemplate.postForObject(hubControllerEndpoint + 
-"/left/90", request, String.class);
-----
-
-+++ </div></details> +++
-
-=== Task: Make your robot stop before hitting the wall
-
-Setup a barrrier/wall and program your robot so it moves to the wall but stops in time before hitting it. You'll need the forward() and distance() functions.
-
-+++ <details><summary> +++
-*>> _Click here for the solution_ <<*
-+++ </summary><div> +++
-
-
-This is again not programmed in a particularly smart way, it's just an intro. Feel free to enhance!
-
-Notice the exit criteria after 10 loops to make sure we are not running into an endless loops.  
-
-----
- MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<String, String>();
-        paramMap.add("user_key", "<GUID>");
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(paramMap,
-                new LinkedMultiValueMap<String, String>());
-        
-    int loopCount = 0;
-    System.out.println("Initial distance " + restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=<GUID>", String.class));
-    
-    while (Integer.valueOf(restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=<GUID>", String.class)) > 100 && loopCount < 10  )
-    {
-        
-        System.out.println("Loop run " + i + " , current distance " + restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=r2d2", String.class));
-        
-        response = restTemplate.postForObject(hubControllerEndpoint + "/forward/5", request, String.class);
-        loopCount++;
-                
-    }
-----
-
-+++ </div></details> +++
-
-TIP: You may wrap your REST calls into functions to make them easier to use
 
 Now return to the main instruction document 
 
-=== Fallback: Use fabric8 to deploy your application instead of odo
+=== FALLBACK: Use fabric8 to deploy your application instead of odo
 
 ==== Login *oc* to OpenShift from CodeReady workspace
 
