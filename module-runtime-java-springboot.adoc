@@ -51,7 +51,7 @@ location: 'https://github.com/cloud-native-robotz-hackathon/starter-app-java.git
 
 to match your own repo url, e.g.:
 ----
-location: 'http://gitea-gitea.apps.cluster-berlin-5375.berlin-5375.example.opentlc.com/terminator/starter-app-java.git' 
+location: 'http://gitea-gitea.apps.cluster-berlin-5375.berlin-5375.example.opentlc.com/<your robotname>/starter-app-java.git' 
 ----
 
 * Click the *Commit Changes* button
@@ -119,7 +119,7 @@ Now *in the terminal window* configure *odo* by running:
 ** Confirm insecure connection and then use your credentials (<robot name> and password) to login to OpenShift
 * `odo project create <robot name>-java-dev` to create a new OpenShift project
 * Change into your project/source directory: `cd /projects/starter-app-java/`
-* Tell *odo* you are building a Java app: `odo create java`
+* Tell *odo* you are building a Java app: `odo create java:8`
 * Create a URL to access your app: `odo url create --port 8080`
 * Build and deploy the first version: `odo push`
 
@@ -151,7 +151,7 @@ As a true DevOps team you can be agile during development in your dev project. B
 
 Here are some training missions to get you started.
 
-*Hints:*
+==== Hints:
 
 * Plan what your robot should do, check the space for the square
 * Look up the robot API calls you might need in 3Scale
@@ -165,7 +165,7 @@ If you want to see e.g. debug messages you put into your code, open the Logs win
 
 === Task: Make your robot drive in a square with approx 10cm edge length
 
-Hints:
+==== Hints:
 
 * Plan what your robot should do, check the space for the square.
 * Look up the API calls you need (remember the API documentation?)
@@ -182,7 +182,7 @@ examples for REST POST and GET Requests)
 ----
  MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<String, 
 String>();
-        paramMap.add("user_key", "<API Key>");
+        paramMap.add("user_key", userKey);
         HttpEntity<MultiValueMap<String, String>> request = new 
 HttpEntity<MultiValueMap<String, String>>(paramMap,
                 new LinkedMultiValueMap<String, String>());
@@ -221,17 +221,17 @@ Notice the exit criteria after 10 loops to make sure we are not running into an 
 
 ----
  MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<String, String>();
-        paramMap.add("user_key", "<GUID>");
+        paramMap.add("user_key", userKey);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(paramMap,
                 new LinkedMultiValueMap<String, String>());
         
     int loopCount = 0;
-    System.out.println("Initial distance " + restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=<GUID>", String.class));
+    System.out.println("Initial distance " + restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=" + userKey, String.class));
     
-    while (Integer.valueOf(restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=<GUID>", String.class)) > 100 && loopCount < 10  )
+    while (Integer.valueOf(restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=" + userKey, String.class)) > 100 && loopCount < 10  )
     {
         
-        System.out.println("Loop run " + i + " , current distance " + restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=r2d2", String.class));
+        System.out.println("Loop run " + i + " , current distance " + restTemplate.getForObject(hubControllerEndpoint + "/distance?user_key=" + userKey, String.class));
         
         response = restTemplate.postForObject(hubControllerEndpoint + "/forward/5", request, String.class);
         loopCount++;
@@ -280,6 +280,8 @@ To build the final release, follow these steps:
 You will be taken to the *Topology* view, the circular arrow icon indicates the running bild process. When the build has finished, is turns into a green check mark.
 
 After the build has finished, open the application by clicking the top right icon to open it.
+
+If you want to rebuild and deploy the production image again after some code changes just go to *Builds* in the main menu and to the right of your Build Configuration *starter-app-java-git* click on the three dots and then *Start Build*. This will trigger a new build and deployment from your Gitea sources.  
 
 Good Luck and Robotz Go, Go, Go! 
 
