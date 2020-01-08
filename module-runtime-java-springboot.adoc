@@ -1,8 +1,8 @@
 = Robot Hackathon - Java module
 //refs
 :url-ocp-basepath: {{OCP-BASEPATH}}
-:url-ocpconsole: https://master.{url-ocp-basepath}/console
-:url-codeready: http://codeready-workspaces.apps.{url-ocp-basepath}
+:url-ocpconsole: https://console-openshift-console.apps.{url-ocp-basepath}
+:url-codeready: http://codeready-codeready.apps.{url-ocp-basepath}
 :url-3scale: {{URL-3SCALE}}
 :url-gogs: http://gitea-gitea.apps.{url-ocp-basepath}
 
