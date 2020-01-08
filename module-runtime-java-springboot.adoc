@@ -3,7 +3,7 @@
 :url-ocp-basepath: {{OCP-BASEPATH}}
 :url-ocpconsole: https://master.{url-ocp-basepath}/console
 :url-codeready: http://codeready-workspaces.apps.{url-ocp-basepath}
-:url-3scale: {{3SCALE_URL}}
+:url-3scale: {{3SCALE-URL}}
 :url-gogs: http://gitea-gitea.apps.{url-ocp-basepath}
 
 
