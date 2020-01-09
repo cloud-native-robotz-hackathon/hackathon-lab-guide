@@ -16,7 +16,7 @@ GitHub repository. You will migrate this template project into your team's Git (
 
 == Migrate the Java Application Template into your Git Repo
 
-. Open the {url-gogs}[Gitea^] web UI.
+. Open the {url-gogs}[Gitea^] web UI (make sure you are logged in)
 . Click on the `*+*` in the upper right and choose `*New Migration*`.
 ** *Clone Address :* https://github.com/cloud-native-robotz-hackathon/starter-app-nodejs.git
 ** *Repository Name :* `*starter-app-nodejs*`
@@ -39,32 +39,31 @@ You could start a workspace in CodeReady and clone your repo manually or use Cod
 
 TIP: A devfile is a simple yaml file that describes your CodeReady Workspaces environment: the stack image to use, the Git repository to clone and more.
 
-Your repository already contains a *devfile.yaml* (go to the Gitea web UI and have a look if you are interested). To use it:
+Your repository already contains a *devfile.yaml*, go to the Gitea web UI and have a look if you are interested). To intialize your workspace with this devfile you have to construct a special url: 
 
-* Go to the {url-gogs}[Gitea^] web UI again, open the new repo and copy the HTTP clone URL. 
+* Go to the {url-gogs}[Gitea^] web UI again
+* Open the new repo and copy the HTTP clone URL
 * Open the *devfile.yaml* by clicking it and press the pencil icon to switch to edit mode. 
-* In edit mode change 
+* In edit mode change the value of *location*, from 
 ----
 location: 'https://github.com/cloud-native-robotz-hackathon/starter-app-nodejs.git' 
 ----
 
-to match your own repo url, e.g.:
-----
-location: 'http://gitea-gitea.apps.cluster-berlin-5375.berlin-5375.example.opentlc.com/<your robotname>/starter-app-nodejs.git' 
-----
+to match your own repo url by pasting the clone url
+
 
 * Click the *Commit Changes* button
 
 
-Now point CodeReady Workspaces to the *devfile.yaml* using a special URL in the form of *\http://codeready.url/f?url=http://gitrepo.url/devfile.yaml*. First get the raw URL of your devfile:
+TIP: CodeReady Workspaces can work with *devfile.yaml* using the special URL in the form of *\http://codeready.url/f?url=http://gitrepo.url/devfile.yaml* where the url parameter points to the git location of the devfile
 
-* Open it by clicking the *Raw* button in Gitea
-* Copy the URL from your browser
-* Open the URL in a new browser tab: 
+If you have kept all naming conventions you can use this url. 
+
+WARNING: Make sure to replace the <robot_name> placeholder !
 
 [subs="attributes"]
 ----
-{url-codeready}/f?url=&lt;your-devfile-raw-url> 
+{url-codeready}/f?url={url-gogs}/&lt;robot_name>/starter-app-nodejs/raw/branch/master/devfile.yaml
 ----
 
 This will bring up an animated construction image while building your dev environment. Hit the *Back to Dashboard* link at the lower left, you will see your workspace being build in the CodeReady web UI. Click the workspace name and then *OPEN*. Watch your workspace building.
