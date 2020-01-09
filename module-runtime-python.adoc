@@ -62,7 +62,7 @@ WARNING: Make sure to replace the <robot_name> placeholder !
 {url-codeready}/f?url={url-gogs}/&lt;robot_name>/starter-app-python/raw/branch/master/devfile.yaml
 ----
 
-This will bring up an animated construction image while building your dev environment. Hit the *Back to Dashboard* link at the lower left, you will see your workspace being build in the CodeReady web UI. Click the workspace name and then *OPEN*. Watch your workspace building.
+Paste this edited url into your browser and open it. This will bring up an animated construction image while building your dev environment. Hit the *Back to Dashboard* link at the lower left, you will see your workspace being build in the CodeReady web UI. Click the workspace name and then *OPEN*. Watch your workspace building.
 
 TIP: This can take a couple of minutes because it has to pull the stack image into OpenShift.
 
@@ -78,7 +78,7 @@ TIP: The devfile did all this for you: Building the stack from a custom image, c
 
 Because the application you cloned is a template, to make it work with your robot you have to configure the connection details first:
 
-* Expand the project tree on the left and open the *config.py* file by double-clicking it
+* Expand the project tree on the left and open the *config.py* file by clicking it
 * Change the *URI* (if required) and the *APITOKEN* parameter
 ** You could look up the URI in your 3Scale account, it should look like this example: *\https://api-2445582274375.production.gw.apicast.io/api/robot*.
 ** For *APITOKEN* fill in your <robot name>
@@ -110,7 +110,7 @@ Bring up your dev environment in CodeReady Workspaces. If you closed it, open Co
 Now *in the terminal window* configure *odo* by running:
 
 * `odo login \https://api.{url-ocp-basepath}:6443`
-** Confirm insecure connection and then use your credentials (<robot name> and password) to login to OpenShift
+** Confirm insecure connection and then use your credentials (<robot name> and 0penshif7) to login to OpenShift
 * `odo project create <robot name>-python-dev` to create a new OpenShift project
 * Change into your project/source directory: `cd /projects/starter-app-python/`
 * Tell *odo* you are building a Python app: `odo create python`
@@ -246,7 +246,7 @@ To build the final release, follow these steps:
 ** Under *General* *application* and *Name* are pre-filled, leave as is
 * Finally hit the *Create* button!
 
-You will be taken to the *Topology* view, the circular arrow icon indicates the running bild process. When the build has finished, is turns into a green check mark.
+You will be taken to the *Topology* view, the circular arrow icon indicates the running build process. When the build has finished, it turns into a green check mark.
 
 After the build has finished, open the application by clicking the top right icon to open it.
 
