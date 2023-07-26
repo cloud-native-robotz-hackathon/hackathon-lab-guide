@@ -1,5 +1,7 @@
 = Robot Hackathon Lab Guide
 
+## ARCHIVED VERSION : Check the aktive repos for the current version 
+
 This projects contains the lab guides to be deployed on the Hackathon OpenShift Cluster.  Ist is based on [Workshopper](https://github.com/openshift-evangelists/workshopper) which is an engine for building a web-based workshop 
 or lab guide. 
 
