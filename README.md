@@ -1,4 +1,4 @@
-# AI Robots: Deep Space OpenShift
+# AI Robots
 
 **For improvements please create Issues at**:  \
 [https://github.com/cloud-native-robotz-hackathon/devel-bucket/issues](https://github.com/cloud-native-robotz-hackathon/devel-bucket/issues)
